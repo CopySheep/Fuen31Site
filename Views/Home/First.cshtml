@@ -5,20 +5,63 @@
 
 <h1>First</h1>
 <button id="btn1" class="btn btn-primary">Ajax</button>
-<div id="div1" class="alert"></div>
+<button id="btn2" class="btn btn-primary">Stop</button>
+<img src="~/images/Loading.gif" id="loading" style="display:none">
+<div id="div1" class="alert alert-info"></div>
 
 @section Scripts{
     <script>
-        const btn = document.querySelector("#btn1");
+        
+        const btnAjax = document.querySelector("#btn1");
+        const btnStop = document.querySelector("#btn2");
         const theDiv = document.querySelector("#div1");
-        btn.addEventListener("click", () => {
-            fetch('@Url.Content("~/Api/index")')
-                .then(response => {
-                    return response.text();
-                })
-                .then(data => {
-                    theDiv.innerHTML = `<h2>${data}</h2>`;
-                });
+        const imgLoading = document.querySelector("#loading");
+        let abortController;
+        
+        btnAjax.addEventListener("click", async () => {
+            try {
+                
+                imgLoading.style.display = "inline"
+                
+                btnAjax.setAttribute("disabled","disabled")
+
+                abortController = new AbortController();
+                const signal = abortController.signal;
+                
+                const response = await fetch('@Url.Content("~/api/index")', {signal});
+
+                if (!response.ok) {
+                    throw new Error(response.status);
+                }
+                const data = await response.text();
+                theDiv.innerHTML = `<h2>${data}</h2>`;
+            }
+            catch (err) {
+                theDiv.innerHTML = `<h2>${err}</h2>`;
+            }
+            finally {
+                imgLoading.style.display = "none"
+                btnAjax.removeAttribute("disabled")
+            }
+
+            btnStop.addEventListener("click", () => {
+                if (abortController) {
+                    abortController.abort();
+                }
+            })
+
+            // fetch('@Url.Content("~/Api/index")')
+            //     .then(response => {
+            //         response.headers.forEach((value, name) => {
+            //             console.log(value);
+            //         });
+            //         console.log(response.ok);
+            //         console.log(response.status);
+            //         return response.text();
+            //     })
+            //     .then(data => {
+            //         theDiv.innerHTML = `<h2>${data}</h2>`;
+            //     });
 
 
         });

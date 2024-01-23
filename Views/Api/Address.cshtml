@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Address";
+}
+
+<h1>Address</h1>
+<select id="city">
+    
+</select>
+
+@section Scripts{
+    <script>
+        const selCity = document.querySelector('#city');
+        (async() => {
+            const response = await fetch('@Url.Content("~/api/cities")');
+            const cities = await response.json();
+            const optCities = cities.map((city, index) => {
+                return`<option value="${city}">${city}</option>`
+            })
+            selCity.innerHTML = optCities.join('');
+        })()
+        
+    </script>
+}
