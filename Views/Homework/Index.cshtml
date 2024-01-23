@@ -16,12 +16,13 @@
         const travles = spots.CommonFormat.Section;
         const div = document.querySelector(".div");
         const htmlTravel = travles.map((item, index) => {
-        let imgs = "";
+        let imgs;
             if (Array.isArray(item.file.img)){
                 imgs = item.file.img[0].text;
             }
             else {
                 imgs = item.file.img.text;
+               
             }
 
             return `<div class="col mb-3">
@@ -35,8 +36,9 @@
                          </div>
                     </div>`
         });
+        
 
-        div.innerHTML = htmlTravel;
+        div.innerHTML = htmlTravel.join("");
 
     </script>
 }
