@@ -26,7 +26,7 @@ namespace Fuen31Site.Controllers
         }
         public IActionResult Distirct(string city)
         {
-             var districts = _dbContext.Addresses.Where(a => a.City == city).Select(a => a.SiteId).Distinct();
+            var districts = _dbContext.Addresses.Where(a => a.City == city).Select(a => a.SiteId).Distinct();
             return Json(districts);
         }
         public IActionResult Address()
@@ -48,12 +48,14 @@ namespace Fuen31Site.Controllers
         public IActionResult CheckAccountAction(string name)
         {
             bool isExisted = _dbContext.Members.Any(n => n.Name == name);
-            if (isExisted)
+            if(isExisted)
             {
-                
+                return Content("帳號已存在", "text/plain", System.Text.Encoding.UTF8);
             }
-            return View();
+            return Content("帳號可使用", "text/plain", System.Text.Encoding.UTF8);
         }
+    
+    
 
         public IActionResult Register(string name, int age = 26) 
         { 

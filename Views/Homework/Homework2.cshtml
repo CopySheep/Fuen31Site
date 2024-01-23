@@ -1,17 +1,19 @@
 ﻿
 @{
-    ViewData["Title"] = "CheckAccountAction";
+    ViewData["Title"] = "Homework2";
 }
 
-<h1>CheckAccountAction</h1>
+<h1>Homework2</h1>
+
 
 <form>
-    <div  class="mb-3">
+    <div class="mb-3">
         <label class="form-label" for="name">姓名：</label>
         <div class="input-group">
             <input type="text" id="name" name="name" class="form-control">
         </div>
     </div>
+    <div class="name"></div>
 
     <div class="mb-3">
         <label class="form-label" for="email">電子郵件：</label>
@@ -19,6 +21,7 @@
             <input type="email" id="email" name="email" class="form-control">
         </div>
     </div>
+    
 
     <div class="mb-3">
         <label class="form-label" for="age">年紀：</label>
@@ -28,7 +31,7 @@
     </div>
     <div class="mb-3">
         <button type="submit" id="submit" class="btn btn-primary ">送出</button>
-        <div class="alert alert-info" id="div1"></div>
+        
     </div>
 
 </form>
@@ -40,17 +43,17 @@
         const email = document.querySelector("#email");
         const age = document.querySelector("#age");
         const submit = document.querySelector("#submit");
-        
+        const divName = document.querySelector(".name");
 
         submit.addEventListener("click", async(event) => {
             event.preventDefault();
             let url = "@Url.Content("~/Api/CheckAccountAction")"
             url = `${url}?name=${name.value}&email=${email.value}&age=${age.value}`;
             const response = await fetch(url);
-            console.log(response);
             const data = await response.text();
-            console.log(data);
-            
+            const template = `
+            <div class="alert alert-info mb-3 name" id = "div1" >${data}</div>`;
+            divName.innerHTML = template;
             });
     </script>
 }
