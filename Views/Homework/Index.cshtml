@@ -5,9 +5,8 @@
 
 <h1>Index</h1>
 
-<div class="container text-center">
+<div class="container text-start">
     <div class="row align-items-start div">
-   
     </div>
 </div>
 
@@ -18,24 +17,23 @@
         const div = document.querySelector(".div");
         const htmlTravel = travles.map((item, index) => {
         let imgs = "";
-            try {
-               imgs = item.file.img[0].text;
+            if (Array.isArray(item.file.img)){
+                imgs = item.file.img[0].text;
             }
-            catch
-            {
-                return imgs = "";
+            else {
+                imgs = item.file.img.text;
             }
-            return `
-                <div class="col-3">
-                     <div class="card" style="width: 18rem;">
-                      <img src=${imgs} class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title">${item.stitle}</h5>
-                        <p class="card-text">${item.xbody}</p>
-                        <p class="card-text">${item.xpostDate}</p>
-                      </div>
-                    </div>
-                </div>`
+
+            return `<div class="col mb-3">
+                         <div class="card" style="width: 18rem;">
+                          <img src=${imgs} class="card-img-top" alt="...">
+                          <div class="card-body">
+                            <h5 class="card-title">${item.stitle}</h5>
+                            <p class="card-text">${item.xbody.slice(0,100)}</p>
+                            <p class="card-text">${item.xpostDate}</p>
+                          </div>
+                         </div>
+                    </div>`
         });
 
         div.innerHTML = htmlTravel;

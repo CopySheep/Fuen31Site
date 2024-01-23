@@ -12,7 +12,7 @@
         const btn = document.querySelector("#btn1");
         const theDiv = document.querySelector("#div1");
         btn.addEventListener("click", () => {
-            fetch("/api/index")
+            fetch('@Url.Content("~/Api/index")')
                 .then(response => {
                     return response.text();
                 })
