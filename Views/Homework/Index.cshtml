@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="container text-center">
+    <div class="row align-items-start div">
+   
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/travel.js"></script>
+    <script>
+        const travles = spots.CommonFormat.Section;
+        const div = document.querySelector(".div");
+        const htmlTravel = travles.map((item, index) => {
+        let imgs = "";
+            try {
+               imgs = item.file.img[0].text;
+            }
+            catch
+            {
+                return imgs = "";
+            }
+            return `
+                <div class="col-3">
+                     <div class="card" style="width: 18rem;">
+                      <img src=${imgs} class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">${item.stitle}</h5>
+                        <p class="card-text">${item.xbody}</p>
+                        <p class="card-text">${item.xpostDate}</p>
+                      </div>
+                    </div>
+                </div>`
+        });
+
+        div.innerHTML = htmlTravel;
+
+    </script>
+}
