@@ -1,17 +1,57 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Register";
 }
 
 <h1>Register</h1>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <form id="userForm">
+            <div class="mb-3">
+                <label for="userName" class="form-label">姓名：</label>
+                <input type="text" class="form-control" id="userName" name="Name">
+            </div>
+            <div class="mb-3">
+                <label for="UserEmail" class="form-label">電子郵件：</label>
+                <input type="email" class="form-control" id="UserEmail" name="Email">
+            </div>
+            <div class="mb-3">
+                <label for="userAge" class="form-label">年紀：</label>
+                <input type="number" class="form-control" id="userAge" name="Age">
+            </div>
+            <div class="mb-3">
+                <label for="userAvatar" class="form-label">頭像：</label>
+                <input type="file" class="form-control" id="userAvatar" name="avatar">
+            </div>
 
-@section Scripts{
+            <button id="button1" type="submit" class="btn btn-primary">送出</button>
+        </form>
+        <div class="alert alert-info" id="div1"></div>
+    </div>
+    <div class="col-3">
+    </div>
+</div>
+@section Scripts {
     <script>
-        (async() => { 
-            const url = "@Url.Content("~/api/register")?name=Tom&age=30";
-            const response = await fetch(url);
+        const btn = document.querySelector('#button1');
+        const divInfo = document.querySelector('#div1');
+        const theForm = document.querySelector('#userForm');
+
+        btn.addEventListener('click', async (event) => {
+            event.preventDefault(); //防止submit送出的功能
+
+            //透過FormData物件讀取表單中使用者輸入的資料
+            const formData = new FormData(theForm);
+
+
+            //將formData資料傳送到Server端
+            const url = '@Url.Content("~/Api/register")';
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
             const datas = await response.text();
-            console.log(datas);
-        })()
+            divInfo.innerHTML = datas;
+           
     </script>
 }
