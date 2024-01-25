@@ -12,5 +12,9 @@ namespace Fuen31Site.Controllers
         {
             return View();
         }
+        public IActionResult Homework3()
+        {
+            return View();
+        }
     }
 }

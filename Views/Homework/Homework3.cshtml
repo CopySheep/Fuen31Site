@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "Homework3";
+}
+
+<h1>Homework3</h1>
+
+<form>
+    <div class="mb-3">
+        <label class="form-label" for="name">姓名：</label>
+        <div class="input-group">
+            <input type="text" id="name" name="name" class="form-control">
+        </div>
+    </div>
+    <div class="name"></div>
+
+    <div class="mb-3">
+        <label class="form-label" for="email">電子郵件：</label>
+        <div class="input-group">
+            <input type="email" id="email" name="email" class="form-control">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="password">密碼：</label>
+        <div class="input-group">
+            <input type="password" id="password" name="password" class="form-control">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="check-password">確認密碼：</label>
+        <div class="input-group">
+            <input type="password" id="check-password" name="checkPassword" class="form-control">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="age">年紀：</label>
+        <div class="input-group">
+            <input type="number" id="age" name="age" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="avatar">頭像：</label>
+        <input class="form-control" type="file" id="avatar" name="avatar">
+    </div>
+
+    <div class="mb-3">
+        <button type="submit" id="submit" class="btn btn-primary ">送出</button>
+    </div>
+
+</form>
+
+
+@section Scripts {
+    <script>
+        const name = document.querySelector("#name");
+        const email = document.querySelector("#email");
+        const age = document.querySelector("#age");
+        const submit = document.querySelector("#submit");
+        const divName = document.querySelector(".name");
+        const password = document.querySelector("#password");
+        const checkPassword = document.querySelector("#check-password");
+        const avatar = document.querySelector("#avatar");
+
+        submit.addEventListener("click", async (event) => {
+            event.preventDefault();
+            let url = "@Url.Content("~/Api/CheckAccountAction")"
+            url = `${url}?name=${name.value}&email=${email.value}&age=${age.value}`;
+            const response = await fetch(url);
+            const data = await response.text();
+            const template = `
+                    <div class="alert alert-info mb-3 name" id = "div1" >${data}</div>`;
+            divName.innerHTML = template;
+        });
+    </script>
+}
